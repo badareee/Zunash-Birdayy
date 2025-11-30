@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Zunash</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f0f;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background images with crossfade animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('pic1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0;
+            z-index: 0;
+            animation: bgFade1 20s ease-in-out infinite;
+            filter: brightness(0.6) contrast(1.1);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('pic2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0;
+            z-index: 0;
+            animation: bgFade2 20s ease-in-out infinite;
+            filter: brightness(0.6) contrast(1.1);
+        }
+
+        @keyframes bgFade1 {
+            0%, 100% { opacity: 0.55; }
+            25% { opacity: 0.65; }
+            50%, 75% { opacity: 0; }
+        }
+
+        @keyframes bgFade2 {
+            0%, 25% { opacity: 0; }
+            50% { opacity: 0.65; }
+            75% { opacity: 0.55; }
+            100% { opacity: 0; }
+        }
+
+        /* Dark gradient overlay for better text readability */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(15, 15, 15, 0.2) 0%, rgba(15, 15, 15, 0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        body > *:not(.background-overlay) {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Subtle floating hearts */
+        .heart {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 192, 203, 0.25);
+            transform: rotate(45deg);
+            animation: heartFloat 30s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 192, 203, 0.25);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -5px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 5px;
+            top: 0;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100vh) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(45deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Minimal sparkles */
+        .sparkle {
+            position: fixed;
+            width: 1.5px;
+            height: 1.5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkleAnim 5s infinite;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+            z-index: 2;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Main containers with glass morphism */
+        .timer-container,
+        .message-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(40px);
+            border-radius: 20px;
+            padding: 60px 50px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.4);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            animation: containerFadeIn 1.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        @keyframes containerFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .message-container {
+            display: none;
+            max-width: 700px;
+        }
+
+        /* Elegant border glow */
+        .timer-container::before,
+        .message-container::before {
+            content: '';
+            position: absolute;
+            top: -1.5px;
+            left: -1.5px;
+            right: -1.5px;
+            bottom: -1.5px;
+            background: linear-gradient(135deg, rgba(180, 140, 200, 0.35), rgba(150, 100, 180, 0.5), rgba(180, 140, 200, 0.35));
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0.3;
+                filter: blur(4px);
+            }
+            50% {
+                opacity: 0.6;
+                filter: blur(5px);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #1a1a1a;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: #4a4a4a;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* Countdown grid */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin: 40px 0;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, rgba(180, 140, 200, 0.75), rgba(150, 100, 180, 0.8));
+            border-radius: 14px;
+            padding: 25px 15px;
+            box-shadow: 0 12px 35px rgba(150, 100, 180, 0.25);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .time-box:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 18px 45px rgba(150, 100, 180, 0.35);
+        }
+
+        .time-box:hover::before {
+            left: 100%;
+        }
+
+        .time-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+        }
+
+        .lock-message {
+            color: #2a2a2a;
+            font-size: 1.15rem;
+            margin-top: 30px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* Message content */
+        .message-text {
+            color: #2a2a2a;
+            line-height: 1.9;
+            font-size: 1.1rem;
+            text-align: left;
+            margin: 30px 0;
+            font-weight: 300;
+        }
+
+        .message-text p {
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(180, 140, 200, 0.05), rgba(150, 100, 180, 0.03));
+            padding: 30px;
+            border-radius: 14px;
+            border-left: 3px solid rgba(150, 100, 180, 0.6);
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(150, 100, 180, 0.08);
+        }
+
+        .highlight-box p {
+            color: #1a1a1a;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .signature {
+            text-align: right;
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            margin-top: 40px;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .decorative-line {
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(180, 140, 200, 0.4), transparent);
+            margin: 25px auto;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .timer-container,
+            .message-container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .time-number {
+                font-size: 2.5rem;
+            }
+
+            .message-text {
+                font-size: 1.05rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .time-number {
+                font-size: 2rem;
+            }
+
+            .message-text {
+                font-size: 1rem;
+            }
+
+            .timer-container,
+            .message-container {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="timer-container" id="timerContainer">
+        <h1>⏳ Coming Soon...</h1>
+        <p class="subtitle">Something special is waiting for you!</p>
+        <div class="countdown">
+            <div class="time-box">
+                <div class="time-number" id="days">00</div>
+                <div class="time-label">Days</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="hours">00</div>
+                <div class="time-label">Hours</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="minutes">00</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="seconds">00</div>
+                <div class="time-label">Seconds</div>
+            </div>
+        </div>
+        <p class="lock-message" id="lockMessage">Website unlocks on December 1st! 🎉</p>
+    </div>
+
+    <div class="message-container" id="messageContainer">
+        <h1>Happy Birthday Zunash! 🎂</h1>
+        <div class="decorative-line"></div>
+        
+        <div class="message-text">
+            <p>I remember the first day I saw you... and since that moment, everything changed. Dunya me 4 billion larkian hain Zunash, but pata nahi kyun mera dil tumhare ilawa kisi ke bare mein tasawwur bhi nahi kar sakta.</p>
+            
+            <p>You are the most special person in my life, and I thank Allah every day for bringing you into my world.</p>
+        </div>
+
+        <div class="highlight-box">
+            <p>Allah pak tumhe hamesha salamat rakhen, khush rakhen, aur tumhari zindagi ko har khushi se bhar dein. May this year bring you all the happiness and tumhari saari wishes true hon, Ameen. 💕</p>
+        </div>
+
+        <div class="message-text">
+            <p>Happy Birthday meri jaan! You deserve all the love and happiness in the world. 🌹</p>
+        </div>
+
+        <div class="signature">
+            — Your Random Lover,<br>Bilal 🙂
+        </div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartCount = 10;
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 30 + 's';
+                heart.style.animationDuration = (25 + Math.random() * 20) + 's';
+                document.body.appendChild(heart);
+            }
+        }
+
+        function createSparkles() {
+            const sparkleCount = 20;
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            let targetDate = new Date(currentYear, 10, 1, 0, 0, 0);
+            const lockDate = new Date(currentYear, 10, 31, 23, 59, 59);
+
+            if (now > lockDate) {
+                targetDate = new Date(currentYear + 1, 11, 1, 0, 0, 0);
+            }
+
+            const startDate = new Date(currentYear, 10, 1, 0, 0, 0);
+            const endDate = new Date(currentYear, 11, 30, 23, 59, 59);
+
+            if (now >= startDate && now <= endDate) {
+                document.getElementById('timerContainer').style.display = 'none';
+                document.getElementById('messageContainer').style.display = 'block';
+                return;
+            }
+
+            const timeDiff = targetDate - now;
+
+            if (timeDiff > 0) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                if (now > lockDate) {
+                    document.getElementById('lockMessage').textContent = 'Website will unlock again on December 1st! 💝';
+                } else {
+                    document.getElementById('lockMessage').textContent = 'Website unlocks on December 1st! 🎉';
+                }
+            }
+        }
+
+        window.addEventListener('load', function () {
+            createHearts();
+            createSparkles();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+
+</html>
