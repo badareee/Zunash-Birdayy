@@ -163,6 +163,9 @@
             box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
             z-index: 2;
         }
+        html{
+            color: white;
+        }
 
         @keyframes sparkleAnim {
             0%, 100% {
@@ -175,42 +178,36 @@
             }
         }
 
-        /* Main containers - Mobile optimized */
+        /* Main containers - Full width/height with transparency */
         .timer-container,
         .message-container {
             position: relative;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(40px);
-            border-radius: 16px;
-            padding: 30px 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-            width: 92%;
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 0;
+            padding: 40px 25px;
+            box-shadow: none;
+            width: 100vw;
+            height: 100vh;
+            max-width: 100%;
+            max-height: 100%;
             text-align: center;
             animation: containerFadeIn 1.8s ease-out;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            max-height: 85vh;
+            border: none;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .timer-container::-webkit-scrollbar,
         .message-container::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .timer-container::-webkit-scrollbar-track,
-        .message-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        .timer-container::-webkit-scrollbar-thumb,
-        .message-container::-webkit-scrollbar-thumb {
-            background: rgba(180, 140, 200, 0.5);
-            border-radius: 10px;
+            width: 0;
+            display: none;
         }
 
         @keyframes containerFadeIn {
@@ -226,70 +223,66 @@
 
         .message-container {
             display: none;
-            max-width: 400px;
-            padding: 30px 20px;
+            padding: 30px 25px;
         }
 
-        /* Elegant border glow */
+        /* Content wrapper for message container */
+        .message-content {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        /* Elegant border glow - removed since no border */
         .timer-container::before,
         .message-container::before {
-            content: '';
-            position: absolute;
-            top: -1.5px;
-            left: -1.5px;
-            right: -1.5px;
-            bottom: -1.5px;
-            background: linear-gradient(135deg, rgba(180, 140, 200, 0.35), rgba(150, 100, 180, 0.5), rgba(180, 140, 200, 0.35));
-            border-radius: 20px;
-            z-index: -1;
-            animation: borderGlow 6s ease-in-out infinite;
+            display: none;
         }
 
-        @keyframes borderGlow {
-            0%, 100% {
-                opacity: 0.3;
-                filter: blur(4px);
-            }
-            50% {
-                opacity: 0.6;
-                filter: blur(5px);
-            }
-        }
-
-        /* Typography - Mobile optimized */
+        /* Typography - Adjusted for full-screen with glow */
         h1 {
             font-family: 'Playfair Display', serif;
-            color: #1a1a1a;
-            font-size: 2rem;
+            color: #ffffff;
+            font-size: 2.5rem;
             margin-bottom: 15px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                         0 0 40px rgba(255, 255, 255, 0.6),
+                         0 0 60px rgba(180, 140, 200, 0.4),
+                         0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .subtitle {
-            color: #4a4a4a;
-            font-size: 1rem;
+            color: #f0f0f0;
+            font-size: 1.1rem;
             margin-bottom: 25px;
             font-weight: 400;
             letter-spacing: 0.3px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
+                         0 0 30px rgba(255, 255, 255, 0.4),
+                         0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        /* Countdown grid - Mobile optimized */
+        /* Countdown grid - Centered */
         .countdown {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 25px 0;
+            gap: 15px;
+            margin: 30px auto;
+            max-width: 400px;
+            width: 100%;
         }
 
         .time-box {
-            background: linear-gradient(135deg, rgba(180, 140, 200, 0.5), rgba(150, 100, 180, 0.6));
+            background: linear-gradient(135deg, rgba(180, 140, 200, 0.2), rgba(150, 100, 180, 0.25));
             border-radius: 12px;
             padding: 20px 12px;
-            box-shadow: 0 8px 25px rgba(150, 100, 180, 0.2);
+            box-shadow: 0 8px 25px rgba(150, 100, 180, 0.15);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .time-box::before {
@@ -313,10 +306,13 @@
         }
 
         .time-number {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: white;
-            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9),
+                         0 0 40px rgba(255, 255, 255, 0.6),
+                         0 0 60px rgba(180, 140, 200, 0.8),
+                         0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         .time-label {
@@ -326,19 +322,24 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             font-weight: 500;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6),
+                         0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .lock-message {
-            color: #2a2a2a;
+            color: #ffffff;
             font-size: 1rem;
             margin-top: 25px;
             font-weight: 400;
             letter-spacing: 0.2px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7),
+                         0 0 30px rgba(255, 255, 255, 0.5),
+                         0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         /* Message content - Mobile optimized */
         .message-text {
-            color: #2a2a2a;
+            color: white;
             line-height: 1.7;
             font-size: 0.95rem;
             text-align: left;
@@ -360,7 +361,7 @@
         }
 
         .highlight-box p {
-            color: #1a1a1a;
+            color: white;
             font-size: 1rem;
             line-height: 1.7;
             font-weight: 400;
@@ -369,7 +370,7 @@
 
         .signature {
             text-align: right;
-            color: #1a1a1a;
+            color: white;
             font-size: 1.05rem;
             margin-top: 25px;
             font-weight: 400;
@@ -383,17 +384,14 @@
             margin: 20px auto;
         }
 
-        /* Responsive design - Already mobile-first, minimal changes needed */
+        /* Responsive design */
         @media (max-width: 360px) {
-            .timer-container,
-            .message-container {
-                padding: 25px 18px;
-                width: 95%;
-                max-height: 80vh;
+            h1 {
+                font-size: 2rem;
             }
 
-            h1 {
-                font-size: 1.8rem;
+            .countdown {
+                max-width: 320px;
             }
 
             .time-number {
@@ -403,44 +401,46 @@
             .message-text {
                 font-size: 0.9rem;
             }
+
+            .timer-container,
+            .message-container {
+                padding: 30px 20px;
+            }
         }
 
         @media (min-width: 768px) {
-            .timer-container,
-            .message-container {
-                max-width: 500px;
-                padding: 40px 30px;
-                max-height: 85vh;
-            }
-
             h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .countdown {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 15px;
+                gap: 20px;
+                max-width: 600px;
             }
 
             .time-number {
-                font-size: 2.5rem;
+                font-size: 3rem;
+            }
+
+            .message-content {
+                max-width: 700px;
             }
         }
 
         @media (min-height: 600px) and (max-height: 700px) {
-            .timer-container,
-            .message-container {
-                max-height: 80vh;
-                padding: 25px 20px;
-            }
-
             h1 {
-                font-size: 1.9rem;
+                font-size: 2.2rem;
                 margin-bottom: 12px;
             }
 
             .countdown {
-                margin: 20px 0;
+                margin: 25px auto;
+            }
+
+            .timer-container,
+            .message-container {
+                padding: 30px 25px;
             }
         }
     </style>
@@ -474,25 +474,27 @@
     </div>
 
     <div class="message-container" id="messageContainer">
-        <h1>Happy Birthday Zunash! 🎂</h1>
-        <div class="decorative-line"></div>
-        
-        <div class="message-text">
-            <p>I remember the first day I saw you... and since that moment, everything changed. Dunya me 4 billion larkian hain Zunash, but pata nahi kyun mera dil tumhare ilawa kisi ke bare mein tasawwur bhi nahi kar sakta.</p>
+        <div class="message-content">
+            <h1>Happy Birthday Zunash! 🎂</h1>
+            <div class="decorative-line"></div>
             
-            <p>You are the most special person in my life, and I thank Allah every day for bringing you into my world.</p>
-        </div>
+            <div class="message-text">
+                <p>I remember the first day I saw you... and since that moment, everything changed. Dunya me 4 billion larkian hain Zunash, but pata nahi kyun mera dil tumhare ilawa kisi ke bare mein tasawwur bhi nahi kar sakta.</p>
+                
+                <p>You are the most special person in my life, and I thank Allah every day for bringing you into my world.</p>
+            </div>
 
-        <div class="highlight-box">
-            <p>Allah pak tumhe hamesha salamat rakhen, khush rakhen, aur tumhari zindagi ko har khushi se bhar dein. May this year bring you all the happiness and tumhari saari wishes true hon, Ameen. 💕</p>
-        </div>
+            <div class="highlight-box">
+                <p>Allah pak tumhe hamesha salamat rakhen, khush rakhen, aur tumhari zindagi ko har khushi se bhar dein. May this year bring you all the happiness and tumhari saari wishes true hon, Ameen. 💕</p>
+            </div>
 
-        <div class="message-text">
-            <p>Happy Birthday meri jaan! You deserve all the love and happiness in the world. 🌹</p>
-        </div>
+            <div class="message-text">
+                <p>Happy Birthday meri jaan! You deserve all the love and happiness in the world. 🌹</p>
+            </div>
 
-        <div class="signature">
-            — Your Random Lover,<br>Bilal 🙂
+            <div class="signature">
+                — Your Random Lover,<br>Bilal 🙂
+            </div>
         </div>
     </div>
 
